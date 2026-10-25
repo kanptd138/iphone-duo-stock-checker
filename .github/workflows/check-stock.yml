@@ -1,0 +1,52 @@
+name: Check iPhone Stock
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check-stock
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run stock check
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python3 check_stock.py
+
+      - name: Commit updated state if changed
+        if: always()
+        run: |
+          if ! git diff --quiet -- state.json; then
+            git config user.name "stock-checker-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add state.json
+            git commit -m "Update stock state"
+            git push
+          fi
+
+      # GitHub disables cron workflows in public repos after 60 days without commits.
+      - name: Keepalive commit
+        if: always()
+        run: |
+          last_commit=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last_commit )) -gt $(( 50 * 86400 )) ]; then
+            git config user.name "stock-checker-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git commit --allow-empty -m "Keepalive"
+            git push
+          fi

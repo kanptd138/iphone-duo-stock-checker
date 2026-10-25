@@ -1,0 +1,35 @@
+{
+  "products": [
+    {
+      "part_number": "MK2D4ZP/A",
+      "label": "iPhone Duo 256GB สตาร์ไวท์",
+      "country_path": "th",
+      "zip_code": "11000",
+      "product_page_url": "https://www.apple.com/th/shop/buy-iphone/iphone-duo/จอภาพขนาด-7.6-นิ้ว-256gb-สตาร์ไวท์"
+    },
+    {
+      "part_number": "MK2E4ZP/A",
+      "label": "iPhone Duo 256GB ไนท์สกาย",
+      "country_path": "th",
+      "zip_code": "11000",
+      "product_page_url": "https://www.apple.com/th/shop/buy-iphone/iphone-duo/จอภาพขนาด-7.6-นิ้ว-256gb-ไนท์สกาย"
+    },
+    {
+      "part_number": "MJRT4ZP/A",
+      "label": "iPhone 18 Pro 256GB ธารน้ำแข็ง",
+      "country_path": "th",
+      "zip_code": "11000",
+      "product_page_url": "https://www.apple.com/th/shop/buy-iphone/iphone-18-pro/จอภาพขนาด-6.3-นิ้ว-256gb-ธารน้ำแข็ง"
+    }
+  ],
+  "line": {
+    "enabled": true
+  },
+  "email": {
+    "enabled": false,
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": 587,
+    "from_addr": "",
+    "to_addr": ""
+  }
+}
